@@ -3,7 +3,7 @@ import os
 from PIL import Image  
 mean_height=0
 mean_width=0
-
+os.chdir("C:\Users\MARTIN EGAHI OGWUCHE\Jetlearn\open cv\images")
 num_of_images=len(os.listdir("."))
 
 for file in os.listdir("."):
@@ -22,4 +22,25 @@ for file in os.listdir("."):
         print(width,height)
         imgresized=img.resize((mean_width,mean_height),Image.ANTIALIAS)
         imgresized.save(file,"JPEG",quality=95)
-    
+def videoGenerator():
+    video_name = "MyFirstVideo.avi"
+
+    os.chdir("")
+
+    images=[]
+    for img in os.listdir("."):
+        if img.endswith(".jpg") or img.endswith(".jpeg") or img.endswith(".png"):
+            images.append(img)
+
+    print(images)
+
+    frame = cv2.imread(os.path.join(".", images[0]))
+
+    height, width, layers = frame.shape
+    video = cv2.VideoWriter(video_name, 0,1,(width,height))
+    for image in images:
+        video.write(cv2.imread(os.path.join(".", image)))
+
+    cv2.destroyAllWindows()
+    video.release()
+videoGenerator()
